@@ -1,0 +1,171 @@
+{
+  "clinicName": "Digital health kiosk",
+  "resultEyebrow": "Your diagnosis",
+  "scoreLabel": "Exposure score",
+  "activationTitle": "Prescription",
+  "activationText": "Go to the Vexl onboarding stage",
+  "actionLabel": "Tell me what to do",
+  "resetLabel": "Next patient",
+  "defaultTreatment": [
+    "Install Vexl.",
+    "Find people through friends and friends of friends.",
+    "Create one small buy or sell offer before you leave the booth."
+  ],
+  "defaultToday": "Open Vexl and make one honest first offer: amount, city, payment method, no drama.",
+  "diagnoses": [
+    {
+      "id": "clear",
+      "minScore": 0,
+      "maxScore": 0,
+      "opener": "You're healthy! Almost.",
+      "title": "Clear file syndrome",
+      "severity": "Low",
+      "medicine": "Vexl Starter Dose",
+      "badge": "Clean scan",
+      "summary": "Nothing dramatic reported. Keep it that way before the paperwork starts.",
+      "treatment": [
+        "Meet the onboarding crew.",
+        "Learn the private P2P route.",
+        "Try one small Vexl action."
+      ],
+      "today": "Go to the Vexl onboarding stage."
+    },
+    {
+      "id": "paperwork_sniffles",
+      "minScore": 1,
+      "maxScore": 24,
+      "opener": "Not bad, but:",
+      "title": "Paperwork sniffles",
+      "severity": "Mild",
+      "medicine": "Peerovexl 500mg",
+      "badge": "Early symptoms",
+      "summary": "A few identity checks have already touched your Bitcoin routine.",
+      "treatment": [
+        "Reduce new paperwork exposure.",
+        "Find people through friends of friends.",
+        "Start with one small private action."
+      ],
+      "today": "Go to the Vexl onboarding stage."
+    },
+    {
+      "id": "identity_rash",
+      "minScore": 25,
+      "maxScore": 42,
+      "opener": "Not bad, but:",
+      "title": "Identity-linkage rash",
+      "severity": "Medium",
+      "medicine": "NoKYCvexl Forte",
+      "badge": "Privacy irritation",
+      "summary": "Your real-world identity has been standing too close to your coins.",
+      "treatment": [
+        "Separate future habits from old exchange history.",
+        "Use a private P2P route.",
+        "Let trusted contacts find you on Vexl."
+      ],
+      "today": "Go to the Vexl onboarding stage."
+    },
+    {
+      "id": "biometric_fever",
+      "minScore": 43,
+      "maxScore": 60,
+      "opener": "Oh no! You've got:",
+      "title": "Biometric fever",
+      "severity": "Medium high",
+      "medicine": "NoKYCvexl Forte",
+      "badge": "Face scan survivor",
+      "summary": "Fingerprints, selfies, and scans are doing too much for a simple Bitcoin trade.",
+      "treatment": [
+        "Stop feeding biometric gates.",
+        "Move the next trade toward people.",
+        "Use encrypted chat and start small."
+      ],
+      "today": "Go to the Vexl onboarding stage."
+    },
+    {
+      "id": "document_loop",
+      "minScore": 61,
+      "maxScore": 78,
+      "opener": "Oh no! You've got:",
+      "title": "Document-loop fatigue",
+      "severity": "High",
+      "medicine": "NoKYCvexl Forte",
+      "badge": "Waiting room veteran",
+      "summary": "More documents, more delays, more permission requests. Your patience is inflamed.",
+      "treatment": [
+        "Build an alternative before the next delay.",
+        "Trade through trusted contacts.",
+        "Practice with a low-stakes Vexl offer."
+      ],
+      "today": "Go to the Vexl onboarding stage."
+    },
+    {
+      "id": "exchange_dependency",
+      "minScore": 79,
+      "maxScore": 96,
+      "opener": "Oh no! You've got:",
+      "title": "Exchange dependency",
+      "severity": "High",
+      "medicine": "Sovereignexl Pack",
+      "badge": "Custody risk",
+      "summary": "Too much of your Bitcoin life still waits for an exchange to approve the next move.",
+      "treatment": [
+        "Do not make one exchange your default doorway.",
+        "Create a P2P route while things are calm.",
+        "Use Vexl to find trusted people nearby."
+      ],
+      "today": "Go to the Vexl onboarding stage."
+    },
+    {
+      "id": "frozen_coin_chills",
+      "minScore": 97,
+      "maxScore": 120,
+      "opener": "Oh no! You've got:",
+      "title": "Frozen-coin chills",
+      "severity": "Very high",
+      "medicine": "Sovereignexl Emergency Pack",
+      "badge": "Withdrawal ward",
+      "summary": "Limits, freezes, and stuck coins are symptoms of a permission-based routine.",
+      "treatment": [
+        "Create an exit habit before urgency hits.",
+        "Prefer people-to-people liquidity.",
+        "Start small and keep control."
+      ],
+      "today": "Go to the Vexl onboarding stage."
+    },
+    {
+      "id": "permission_poisoning",
+      "minScore": 121,
+      "maxScore": 999,
+      "opener": "Oh no! You've got:",
+      "title": "Permission-slip poisoning",
+      "severity": "Maximum",
+      "medicine": "Sovereignexl Emergency Pack",
+      "badge": "Parallel Economy Native",
+      "summary": "Urgent treatment: less compliance theater, more people-to-people Bitcoin.",
+      "treatment": [
+        "Stop treating exchanges as your default Bitcoin doorway.",
+        "Build one private path for P2P liquidity.",
+        "Use Vexl so the next trade starts with people, not paperwork."
+      ],
+      "today": "Go to the Vexl onboarding stage."
+    }
+  ],
+  "categoryBoosts": {
+    "exchange": {
+      "condition": "Exchange Domestication",
+      "line": "Too much of your Bitcoin life is orbiting exchanges."
+    },
+    "privacy": {
+      "condition": "Identity-Linkage Rash",
+      "line": "Your coins and your real name are standing too close together."
+    },
+    "custody": {
+      "condition": "Custody Coordination Fog",
+      "line": "You need more control before the next withdrawal drama."
+    },
+    "p2p": {
+      "condition": "P2P Muscle Weakness",
+      "line": "Your P2P route exists. It just needs a first offer."
+    }
+  }
+}

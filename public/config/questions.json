@@ -1,0 +1,92 @@
+{
+  "eyebrow": "30 second privacy checkup",
+  "title": "Check your Digital Health",
+  "subtitle": "Tap every symptom that happened to you. Multiple answers are allowed.",
+  "confirmLabel": "Confirm",
+  "questions": [
+    {
+      "id": "uploaded_id",
+      "label": "Uploaded my ID / Passport",
+      "shortLabel": "ID upload",
+      "weight": 14,
+      "affects": ["privacy", "exchange"]
+    },
+    {
+      "id": "fingerprint",
+      "label": "Gave my fingerprint",
+      "shortLabel": "Fingerprint scan",
+      "weight": 20,
+      "affects": ["privacy"]
+    },
+    {
+      "id": "face_scan",
+      "label": "Took selfie or face scan",
+      "shortLabel": "Face scan",
+      "weight": 18,
+      "affects": ["privacy", "exchange"]
+    },
+    {
+      "id": "bank_details",
+      "label": "Shared my bank details",
+      "shortLabel": "Bank details shared",
+      "weight": 15,
+      "affects": ["exchange", "p2p"]
+    },
+    {
+      "id": "address",
+      "label": "Shared my address",
+      "shortLabel": "Address shared",
+      "weight": 12,
+      "affects": ["privacy"]
+    },
+    {
+      "id": "verification_delayed",
+      "label": "Verification got delayed",
+      "shortLabel": "Delayed verification",
+      "weight": 13,
+      "affects": ["exchange"]
+    },
+    {
+      "id": "more_documents",
+      "label": "More documents requested",
+      "shortLabel": "Document loop",
+      "weight": 16,
+      "affects": ["exchange", "privacy"]
+    },
+    {
+      "id": "source_of_funds",
+      "label": "Asked for source of funds",
+      "shortLabel": "Source of funds",
+      "weight": 18,
+      "affects": ["exchange", "privacy"]
+    },
+    {
+      "id": "frozen_account",
+      "label": "My account got frozen",
+      "shortLabel": "Frozen account",
+      "weight": 24,
+      "affects": ["exchange", "custody"]
+    },
+    {
+      "id": "withdrawal_limit",
+      "label": "Withdrawal limit",
+      "shortLabel": "Withdrawal limit",
+      "weight": 15,
+      "affects": ["exchange", "custody"]
+    },
+    {
+      "id": "coins_stuck",
+      "label": "Coins stuck on exchange",
+      "shortLabel": "Coins stuck",
+      "weight": 22,
+      "affects": ["exchange", "custody"]
+    },
+    {
+      "id": "repeat_verification",
+      "label": "Asked to verify again",
+      "shortLabel": "Repeat verification",
+      "weight": 14,
+      "affects": ["exchange", "privacy"]
+    }
+  ]
+}
