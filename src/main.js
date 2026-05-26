@@ -49,7 +49,7 @@ function getSelectedQuestions() {
 }
 
 function goTo(screen) {
-  window.location.hash = screen === 'results' ? '#results' : '#intake';
+  window.location.hash = screen === 'results' ? '#results' : screen === 'intake' ? '#intake' : '';
   state.adviceVisible = false;
   render();
   requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }));
@@ -60,13 +60,32 @@ function renderHeader() {
     <header class="topbar">
       <div class="brand-lockup">
         <img class="logo" src="/assets/logos/vexl-logo-white.svg" alt="Vexl" />
-        <span>Booth intake</span>
       </div>
       <div class="clinic-pill" aria-label="Clinic name">
         ${state.config.diagnosticConfig.clinicName}
       </div>
     </header>
   `;
+}
+
+function renderStart() {
+  const { questionConfig } = state.config;
+
+  app.innerHTML = `
+    <main class="shell start-shell">
+      ${renderHeader()}
+      <section class="start-screen">
+        <div class="start-copy">
+          <p class="eyebrow">${questionConfig.eyebrow}</p>
+          <h1>Check your Digital Health</h1>
+          <button class="primary-button start-button" data-action="start">Check my health</button>
+        </div>
+        <div class="no-kyc-stamp" aria-hidden="true">NO KYC</div>
+      </section>
+    </main>
+  `;
+
+  app.querySelector('[data-action="start"]').addEventListener('click', () => goTo('intake'));
 }
 
 function renderIntake() {
@@ -78,9 +97,7 @@ function renderIntake() {
       ${renderHeader()}
       <section class="hero-grid">
         <div class="intro">
-          <p class="eyebrow">${questionConfig.eyebrow}</p>
-          <div class="screen-title">${questionConfig.title}</div>
-          <p class="subtitle">${questionConfig.subtitle}</p>
+          <h1 class="screen-title">Tap every symptom <span>Multiple answers are allowed.</span></h1>
         </div>
         <aside class="status-card">
           <div class="status-card-top">
@@ -162,10 +179,11 @@ function renderResults() {
           ${
             state.adviceVisible
               ? `
-                <h2>${diagnosticConfig.activationText}</h2>
+                <h2>Scan Vexl</h2>
+                <p class="activation-copy">${diagnosticConfig.activationText}</p>
                 <div class="qr-block">
                   <img src="/assets/images/vexl-download-qr.webp" alt="Vexl download QR code" />
-                  <span>Scan Vexl</span>
+                  <span>Download app</span>
                 </div>
               `
               : `
@@ -189,7 +207,7 @@ function renderResults() {
 
   app.querySelector('[data-action="reset"]').addEventListener('click', () => {
     state.selected.clear();
-    goTo('intake');
+    goTo('start');
   });
 
   app.querySelector('[data-action="advice"]')?.addEventListener('click', () => {
@@ -203,8 +221,10 @@ function render() {
 
   if (window.location.hash === '#results') {
     renderResults();
-  } else {
+  } else if (window.location.hash === '#intake') {
     renderIntake();
+  } else {
+    renderStart();
   }
 }
 

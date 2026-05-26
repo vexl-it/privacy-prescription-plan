@@ -39,19 +39,23 @@
 }
 
 :root {
-  --ink: oklch(14% 0.015 130);
-  --ink-soft: oklch(26% 0.018 130);
-  --paper: oklch(94% 0.026 109);
-  --paper-warm: oklch(89% 0.045 88);
-  --paper-quiet: oklch(82% 0.04 100);
-  --acid: oklch(86% 0.25 128);
-  --acid-dark: oklch(38% 0.13 132);
-  --pink: oklch(75% 0.18 350);
-  --pink-dark: oklch(44% 0.14 350);
-  --amber: oklch(82% 0.16 78);
-  --mint: oklch(82% 0.11 160);
-  --line: oklch(31% 0.02 130);
-  --paper-line: oklch(72% 0.045 100);
+  --ink: oklch(8% 0.006 110);
+  --ink-soft: oklch(22% 0.006 110);
+  --panel: oklch(26% 0.006 110);
+  --panel-raised: oklch(32% 0.006 110);
+  --paper: oklch(98% 0.006 96);
+  --paper-card: oklch(93% 0.008 96);
+  --paper-soft: oklch(77% 0.006 96);
+  --paper-quiet: oklch(54% 0.006 96);
+  --acid: oklch(86% 0.115 82);
+  --acid-dark: oklch(37% 0.055 82);
+  --pink: oklch(85% 0.095 338);
+  --pink-dark: oklch(47% 0.055 338);
+  --amber: oklch(86% 0.115 82);
+  --mint: oklch(84% 0.075 151);
+  --mint-dark: oklch(42% 0.04 151);
+  --line: oklch(38% 0.006 110);
+  --paper-line: oklch(45% 0.006 110);
   color: var(--paper);
   background: var(--ink);
   font-family: 'TT Satoshi', system-ui, sans-serif;
@@ -75,10 +79,11 @@ body {
   margin: 0;
   overflow-x: hidden;
   background:
-    linear-gradient(90deg, color-mix(in oklch, var(--paper) 7%, transparent) 1px, transparent 1px),
-    linear-gradient(0deg, color-mix(in oklch, var(--paper) 5%, transparent) 1px, transparent 1px),
+    radial-gradient(circle at 18% 6%, color-mix(in oklch, var(--acid) 16%, transparent), transparent 29%),
+    linear-gradient(90deg, color-mix(in oklch, var(--paper) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(0deg, color-mix(in oklch, var(--paper) 3%, transparent) 1px, transparent 1px),
     var(--ink);
-  background-size: 44px 44px;
+  background-size: auto, 56px 56px, 56px 56px, auto;
 }
 
 body::before {
@@ -86,12 +91,12 @@ body::before {
   inset: 0;
   z-index: -2;
   background:
-    linear-gradient(90deg, color-mix(in oklch, var(--acid) 19%, transparent), transparent 46%),
+    linear-gradient(90deg, color-mix(in oklch, var(--acid) 16%, transparent), transparent 48%),
     image-set(url('/assets/images/web-pattern.webp') 1x);
   background-size: auto, 620px auto;
   background-position: left center, right -110px top -80px;
   background-repeat: no-repeat, repeat;
-  opacity: 0.34;
+  opacity: 0.28;
   content: '';
 }
 
@@ -101,7 +106,7 @@ body::after {
   z-index: -1;
   pointer-events: none;
   background:
-    repeating-linear-gradient(174deg, transparent 0 34px, color-mix(in oklch, var(--pink) 11%, transparent) 34px 35px),
+    repeating-linear-gradient(174deg, transparent 0 34px, color-mix(in oklch, var(--pink) 7%, transparent) 34px 35px),
     linear-gradient(180deg, transparent 0%, color-mix(in oklch, var(--ink) 72%, transparent) 76%);
   content: '';
 }
@@ -118,7 +123,7 @@ button {
 
 button:focus-visible,
 input:focus-visible + .checkmark {
-  outline: 4px solid var(--pink);
+  outline: 4px solid var(--acid);
   outline-offset: 5px;
 }
 
@@ -142,18 +147,17 @@ input:focus-visible + .checkmark {
   display: inline-flex;
   align-items: center;
   min-height: 50px;
-  border: 1px solid color-mix(in oklch, var(--paper) 30%, transparent);
-  background: color-mix(in oklch, var(--ink) 82%, transparent);
+  border: 1px solid color-mix(in oklch, var(--paper) 18%, transparent);
+  border-radius: 16px;
+  background: var(--panel);
   color: var(--paper);
-  box-shadow: 0 18px 36px color-mix(in oklch, var(--ink) 70%, transparent);
+  box-shadow: 0 18px 36px color-mix(in oklch, var(--ink) 56%, transparent);
 }
 
 .brand-lockup {
-  gap: 18px;
-  padding: 8px 18px 8px 14px;
+  padding: 8px 16px 8px 14px;
 }
 
-.brand-lockup span,
 .clinic-pill,
 .eyebrow,
 .panel-label,
@@ -164,7 +168,7 @@ input:focus-visible + .checkmark {
 .score-panel span,
 .qr-block span {
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -177,12 +181,73 @@ input:focus-visible + .checkmark {
 .clinic-pill {
   justify-content: center;
   padding: 11px 18px;
+  background: var(--panel);
+  color: var(--paper-soft);
   text-align: center;
+}
+
+.start-shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding-bottom: clamp(24px, 3vw, 44px);
+}
+
+.start-screen {
+  position: relative;
+  display: grid;
+  min-height: calc(100vh - 130px);
+  place-items: center;
+}
+
+.start-copy {
+  display: grid;
+  justify-items: center;
+  gap: clamp(18px, 2.4vw, 30px);
+  text-align: center;
+}
+
+.start-copy .eyebrow {
+  margin: 0;
+  color: var(--paper-soft);
+  font-size: clamp(19px, 1.8vw, 28px);
+}
+
+.start-copy h1 {
+  max-width: 10.5ch;
+  margin: 0;
+  color: var(--paper);
+  font-family: 'PP Monument', Impact, sans-serif;
+  font-size: clamp(74px, 9vw, 132px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.start-button {
+  min-width: min(100%, 340px);
+}
+
+.no-kyc-stamp {
+  position: fixed;
+  right: clamp(10px, 2.5vw, 34px);
+  bottom: clamp(22px, 2.5vw, 38px);
+  display: grid;
+  width: clamp(130px, 13vw, 188px);
+  height: clamp(56px, 5.4vw, 76px);
+  place-items: center;
+  border: 4px solid color-mix(in oklch, var(--pink) 78%, transparent);
+  color: color-mix(in oklch, var(--pink) 86%, var(--paper));
+  font-family: 'PP Monument', Impact, sans-serif;
+  font-size: clamp(22px, 2.3vw, 34px);
+  font-weight: 700;
+  opacity: 0.72;
+  transform: rotate(-8deg);
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 270px);
   gap: clamp(12px, 1.6vw, 20px);
   align-items: stretch;
   margin-bottom: clamp(12px, 1.6vw, 18px);
@@ -191,47 +256,18 @@ input:focus-visible + .checkmark {
 .intro {
   position: relative;
   overflow: hidden;
-  min-height: clamp(178px, 20vh, 232px);
+  min-height: clamp(156px, 18vh, 206px);
   padding: clamp(20px, 2.6vw, 34px);
-  border: 1px solid var(--line);
-  background:
-    linear-gradient(110deg, var(--paper) 0%, var(--paper) 58%, color-mix(in oklch, var(--acid) 62%, var(--paper)) 58% 100%);
-  color: var(--ink);
-}
-
-.intro::before {
-  position: absolute;
-  right: -76px;
-  bottom: -86px;
-  width: 260px;
-  height: 260px;
-  border: 3px solid var(--pink-dark);
-  border-radius: 50%;
-  transform: rotate(-14deg);
-  content: '';
-}
-
-.intro::after {
-  position: absolute;
-  right: 32px;
-  bottom: 22px;
-  width: 156px;
-  height: 58px;
-  border: 4px solid var(--pink-dark);
-  color: var(--pink-dark);
-  transform: rotate(-9deg);
-  content: 'NO KYC';
-  display: grid;
-  place-items: center;
-  font-family: 'PP Monument', Impact, sans-serif;
-  font-size: 24px;
-  font-weight: 700;
+  border: 1px solid color-mix(in oklch, var(--paper) 16%, transparent);
+  border-radius: 24px;
+  background: color-mix(in oklch, var(--panel) 82%, transparent);
+  color: var(--paper);
 }
 
 .eyebrow,
 .panel-label {
   margin: 0 0 13px;
-  color: var(--pink-dark);
+  color: var(--acid);
 }
 
 h2,
@@ -253,13 +289,25 @@ h2,
 .screen-title {
   position: relative;
   z-index: 1;
-  max-width: 880px;
-  margin-bottom: 10px;
-  color: var(--ink);
-  font-size: clamp(44px, 5vw, 74px);
+  max-width: 11ch;
+  margin: 0;
+  color: var(--paper);
+  font-size: clamp(54px, 5.7vw, 86px);
   font-weight: 700;
-  line-height: 0.88;
+  line-height: 0.84;
   text-transform: uppercase;
+}
+
+.screen-title span {
+  display: block;
+  max-width: 18ch;
+  margin-top: 12px;
+  color: var(--paper-soft);
+  font-family: 'TT Satoshi', system-ui, sans-serif;
+  font-size: clamp(24px, 2.2vw, 34px);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: none;
 }
 
 .subtitle {
@@ -267,7 +315,7 @@ h2,
   z-index: 1;
   max-width: 690px;
   margin-bottom: 0;
-  color: var(--ink-soft);
+  color: var(--paper-soft);
   font-size: clamp(19px, 1.7vw, 27px);
   font-weight: 600;
   line-height: 1.08;
@@ -277,12 +325,13 @@ h2,
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: clamp(178px, 20vh, 232px);
+  min-height: clamp(156px, 18vh, 206px);
   margin: 0;
   padding: 24px;
-  border: 1px solid color-mix(in oklch, var(--ink) 25%, var(--acid));
-  background: var(--acid);
-  color: var(--ink);
+  border: 1px solid color-mix(in oklch, var(--paper) 13%, transparent);
+  border-radius: 24px;
+  background: color-mix(in oklch, var(--paper) 12%, var(--panel));
+  color: var(--paper);
 }
 
 .status-card-top {
@@ -299,7 +348,7 @@ h2,
 .status-card p,
 .status-card small {
   margin: 0;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -332,10 +381,10 @@ h2,
   align-items: center;
   min-height: clamp(78px, 8.7vh, 94px);
   padding: 12px 16px;
-  border: 2px solid color-mix(in oklch, var(--paper) 24%, transparent);
-  background:
-    linear-gradient(180deg, color-mix(in oklch, var(--paper) 11%, var(--ink)), color-mix(in oklch, var(--paper) 5%, var(--ink)));
-  color: var(--paper);
+  border: 2px solid color-mix(in oklch, var(--ink) 8%, var(--paper-card));
+  border-radius: 18px;
+  background: var(--paper-card);
+  color: var(--ink);
   transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms cubic-bezier(0.22, 1, 0.36, 1), background 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -355,7 +404,8 @@ h2,
   width: 34px;
   height: 34px;
   place-items: center;
-  border: 2px solid color-mix(in oklch, var(--paper) 58%, transparent);
+  border: 2px solid color-mix(in oklch, var(--ink) 26%, transparent);
+  border-radius: 10px;
   color: var(--ink);
   font-size: 22px;
   font-weight: 900;
@@ -365,7 +415,7 @@ h2,
   grid-column: 1;
   grid-row: 1 / -1;
   justify-self: start;
-  color: var(--amber);
+  color: var(--pink-dark);
   font-size: clamp(18px, 2vw, 27px);
 }
 
@@ -373,7 +423,7 @@ h2,
   grid-column: 3;
   align-self: center;
   margin: 0;
-  color: var(--paper);
+  color: var(--ink);
   font-size: clamp(20px, 2vw, 28px);
   font-weight: 700;
   line-height: 1.05;
@@ -383,13 +433,12 @@ h2,
   grid-column: 3;
   align-self: start;
   margin-top: 5px;
-  color: color-mix(in oklch, var(--paper) 60%, transparent);
+  color: var(--ink-soft);
 }
 
 .question-card.is-selected {
-  border-color: var(--acid);
-  background:
-    linear-gradient(180deg, color-mix(in oklch, var(--acid) 24%, var(--ink)), color-mix(in oklch, var(--pink) 12%, var(--ink)));
+  border-color: color-mix(in oklch, var(--pink) 74%, var(--ink));
+  background: color-mix(in oklch, var(--pink) 18%, var(--paper-card));
 }
 
 .question-card.is-selected .checkmark {
@@ -399,7 +448,7 @@ h2,
 
 .question-card.is-selected .question-number,
 .question-card.is-selected .question-state {
-  color: var(--acid);
+  color: var(--pink-dark);
 }
 
 .action-bar {
@@ -412,8 +461,8 @@ h2,
   justify-content: flex-end;
   gap: 12px;
   padding: 16px clamp(20px, 3vw, 44px);
-  border-top: 1px solid color-mix(in oklch, var(--paper) 24%, transparent);
-  background: color-mix(in oklch, var(--ink) 91%, transparent);
+  border-top: 1px solid color-mix(in oklch, var(--paper) 14%, transparent);
+  background: color-mix(in oklch, var(--ink) 94%, transparent);
   box-shadow: 0 -18px 52px color-mix(in oklch, var(--ink) 78%, transparent);
 }
 
@@ -423,8 +472,9 @@ h2,
   min-height: 64px;
   padding: 16px 28px;
   border: 1px solid color-mix(in oklch, var(--ink) 25%, var(--acid));
+  border-radius: 16px;
   font-size: clamp(19px, 1.8vw, 24px);
-  font-weight: 900;
+  font-weight: 700;
   text-transform: uppercase;
   transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), background 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -435,9 +485,9 @@ h2,
 }
 
 .secondary-button {
-  border-color: color-mix(in oklch, var(--paper) 26%, transparent);
-  background: var(--paper);
-  color: var(--ink);
+  border-color: color-mix(in oklch, var(--paper) 18%, transparent);
+  background: var(--panel-raised);
+  color: var(--paper);
 }
 
 .primary-button:active,
@@ -456,9 +506,10 @@ h2,
 .diagnosis-card,
 .clinic-note,
 .activation {
-  border: 1px solid var(--paper-line);
-  color: var(--ink);
-  box-shadow: 10px 10px 0 var(--acid), 19px 19px 0 color-mix(in oklch, var(--pink) 72%, var(--ink));
+  border: 1px solid color-mix(in oklch, var(--paper) 15%, transparent);
+  border-radius: 24px;
+  color: var(--paper);
+  box-shadow: none;
 }
 
 .diagnosis-card {
@@ -467,8 +518,8 @@ h2,
   min-height: min(58vh, 570px);
   padding: clamp(34px, 5vw, 74px);
   background:
-    repeating-linear-gradient(0deg, transparent 0 31px, color-mix(in oklch, var(--paper-line) 35%, transparent) 31px 32px),
-    var(--paper);
+    repeating-linear-gradient(0deg, transparent 0 31px, color-mix(in oklch, var(--paper) 5%, transparent) 31px 32px),
+    var(--panel);
 }
 
 .diagnosis-card::after {
@@ -479,9 +530,9 @@ h2,
   width: clamp(96px, 11vw, 150px);
   height: clamp(96px, 11vw, 150px);
   place-items: center;
-  border: 7px solid var(--pink-dark);
+  border: 7px solid var(--pink);
   border-radius: 50%;
-  color: var(--pink-dark);
+  color: var(--pink);
   content: 'Rx';
   font-family: 'PP Monument', Impact, sans-serif;
   font-size: clamp(34px, 4vw, 52px);
@@ -491,7 +542,7 @@ h2,
 
 .diagnosis-opener {
   margin: 0 0 12px;
-  color: var(--pink-dark);
+  color: var(--pink);
   font-size: clamp(28px, 3.2vw, 48px);
   font-weight: 900;
   line-height: 1;
@@ -500,7 +551,7 @@ h2,
 .diagnosis-card h1 {
   max-width: 100%;
   margin: 0;
-  color: var(--ink);
+  color: var(--paper);
   font-family: 'PP Monument', Impact, sans-serif;
   font-size: clamp(52px, 5.6vw, 92px);
   font-weight: 700;
@@ -520,6 +571,8 @@ h2,
   align-items: center;
   min-height: 38px;
   padding: 8px 12px;
+  border: 1px solid color-mix(in oklch, var(--paper) 13%, transparent);
+  border-radius: 999px;
   background: var(--ink);
   color: var(--paper);
   font-size: 15px;
@@ -530,13 +583,18 @@ h2,
 .clinic-note {
   align-self: start;
   padding: clamp(22px, 2.5vw, 32px);
-  background: var(--amber);
+  background: color-mix(in oklch, var(--paper) 88%, var(--mint));
+  color: var(--ink);
+}
+
+.clinic-note .panel-label {
+  color: var(--ink);
 }
 
 .clinic-note.has-advice {
   display: grid;
-  gap: 18px;
-  background: color-mix(in oklch, var(--pink) 78%, var(--paper));
+  gap: 14px;
+  background: var(--pink);
 }
 
 .clinic-note.has-advice h2 {
@@ -544,14 +602,23 @@ h2,
   margin: 0;
   color: var(--ink);
   font-family: 'PP Monument', Impact, sans-serif;
-  font-size: clamp(32px, 2.9vw, 48px);
-  line-height: 0.9;
+  font-size: clamp(42px, 3.7vw, 60px);
+  line-height: 0.88;
   text-transform: uppercase;
-  overflow-wrap: anywhere;
+}
+
+.activation-copy {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--pink-dark);
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 700;
+  line-height: 1.08;
 }
 
 .clinic-note.has-advice .qr-block {
-  width: 176px;
+  width: min(100%, 196px);
+  margin-top: 6px;
 }
 
 .clinic-note p:last-child,
@@ -565,7 +632,7 @@ h2,
 .category-line {
   margin: 20px 0 0;
   padding-top: 18px;
-  border-top: 1px solid color-mix(in oklch, var(--ink) 28%, transparent);
+  border-top: 1px solid color-mix(in oklch, var(--ink) 22%, transparent);
 }
 
 .rx-top {
@@ -595,7 +662,7 @@ h2,
 .result-summary {
   max-width: 780px;
   margin: 20px 0 0;
-  color: var(--ink-soft);
+  color: var(--paper-soft);
   font-size: clamp(22px, 2.2vw, 32px);
   font-weight: 600;
   line-height: 1.12;
@@ -764,16 +831,19 @@ h2,
 
 .qr-block {
   display: grid;
-  gap: 10px;
+  gap: 8px;
   width: 178px;
-  padding: 14px;
-  background: var(--paper);
+  padding: 12px;
+  border: 1px solid color-mix(in oklch, var(--ink) 18%, transparent);
+  border-radius: 16px;
+  background: var(--acid);
   color: var(--ink);
   text-align: center;
 }
 
 .qr-block img {
   width: 100%;
+  border-radius: 8px;
 }
 
 .activation {
@@ -877,7 +947,7 @@ h2,
   }
 
   .intro {
-    min-height: 378px;
+    min-height: 210px;
     padding: 24px;
   }
 
@@ -896,8 +966,36 @@ h2,
 
   .screen-title {
     max-width: 100%;
-    font-size: clamp(54px, 16vw, 66px);
-    overflow-wrap: anywhere;
+    font-size: clamp(38px, 11vw, 44px);
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .screen-title span {
+    font-size: clamp(20px, 6vw, 26px);
+  }
+
+  .start-screen {
+    min-height: calc(100vh - 188px);
+    align-items: center;
+  }
+
+  .start-copy h1 {
+    max-width: 100%;
+    font-size: clamp(48px, 16vw, 64px);
+    overflow-wrap: normal;
+  }
+
+  .start-button {
+    min-width: 100%;
+  }
+
+  .no-kyc-stamp {
+    right: 14px;
+    bottom: 18px;
+    width: 132px;
+    height: 52px;
+    font-size: 22px;
   }
 
   .rx-top .screen-title {
