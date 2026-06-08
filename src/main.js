@@ -153,7 +153,7 @@ function renderResults() {
   const symptoms = getSelectedQuestions();
   const symptomText = symptoms.length
     ? symptoms.map((question) => question.shortLabel).join(', ')
-    : 'No major symptoms reported';
+    : 'No symptoms detected, but they could appear soon. Get your prevention prescription before symptoms appear.';
 
   app.innerHTML = `
     <main class="shell results-shell">
