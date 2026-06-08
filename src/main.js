@@ -150,8 +150,6 @@ function renderResults() {
   const { diagnosticConfig } = state.config;
   const score = getScore();
   const diagnosis = getDiagnosis(score);
-  const dominantCategory = getDominantCategory();
-  const category = diagnosticConfig.categoryBoosts[dominantCategory];
   const symptoms = getSelectedQuestions();
   const symptomText = symptoms.length
     ? symptoms.map((question) => question.shortLabel).join(', ')
@@ -188,7 +186,6 @@ function renderResults() {
               `
               : `
                 <p>${symptomText}</p>
-                <p class="category-line">${category.condition}: ${category.line}</p>
               `
           }
         </div>
