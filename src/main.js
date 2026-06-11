@@ -1,11 +1,45 @@
 import './styles.css';
 
 const app = document.querySelector('#app');
+const THEME_STORAGE_KEY = 'vexl-privacy-clinic-theme-mode';
+const themeModes = ['light', 'dark', 'system'];
+const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
 const state = {
   selected: new Set(),
   config: null,
   adviceVisible: false,
+  themeMode: getInitialThemeMode(),
 };
+
+function getInitialThemeMode() {
+  const savedMode = localStorage.getItem(THEME_STORAGE_KEY);
+  return themeModes.includes(savedMode) ? savedMode : 'system';
+}
+
+function getResolvedTheme() {
+  return state.themeMode === 'system'
+    ? systemThemeQuery.matches
+      ? 'dark'
+      : 'light'
+    : state.themeMode;
+}
+
+function applyTheme() {
+  const resolvedTheme = getResolvedTheme();
+  document.documentElement.dataset.theme = resolvedTheme;
+  document.documentElement.dataset.themeMode = state.themeMode;
+  document.documentElement.style.colorScheme = resolvedTheme;
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute('content', resolvedTheme === 'dark' ? '#050604' : '#f4f1e8');
+}
+
+function setThemeMode(mode) {
+  state.themeMode = mode;
+  localStorage.setItem(THEME_STORAGE_KEY, mode);
+  applyTheme();
+  render();
+}
 
 async function loadConfig() {
   const [questionConfig, diagnosticConfig] = await Promise.all([
@@ -61,11 +95,37 @@ function renderHeader() {
       <div class="brand-lockup">
         <img class="logo" src="/assets/logos/vexl-logo-white.svg" alt="Vexl" />
       </div>
-      <div class="clinic-pill" aria-label="Clinic name">
-        ${state.config.diagnosticConfig.clinicName}
+      <div class="topbar-actions">
+        <div class="theme-switcher" aria-label="Color theme">
+          ${themeModes
+            .map(
+              (mode) => `
+                <button
+                  class="theme-option ${state.themeMode === mode ? 'is-active' : ''}"
+                  type="button"
+                  data-theme-mode="${mode}"
+                  aria-pressed="${state.themeMode === mode}"
+                >
+                  ${mode}
+                </button>
+              `,
+            )
+            .join('')}
+        </div>
+        <div class="clinic-pill" aria-label="Clinic name">
+          ${state.config.diagnosticConfig.clinicName}
+        </div>
       </div>
     </header>
   `;
+}
+
+function bindHeaderActions() {
+  app.querySelectorAll('[data-theme-mode]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      setThemeMode(event.currentTarget.dataset.themeMode);
+    });
+  });
 }
 
 function renderStart() {
@@ -86,6 +146,7 @@ function renderStart() {
   `;
 
   app.querySelector('[data-action="start"]').addEventListener('click', () => goTo('intake'));
+  bindHeaderActions();
 }
 
 function renderIntake() {
@@ -144,6 +205,7 @@ function renderIntake() {
   });
 
   app.querySelector('[data-action="confirm"]').addEventListener('click', () => goTo('results'));
+  bindHeaderActions();
 }
 
 function renderResults() {
@@ -211,6 +273,7 @@ function renderResults() {
     state.adviceVisible = true;
     renderResults();
   });
+  bindHeaderActions();
 }
 
 function render() {
@@ -227,6 +290,13 @@ function render() {
 
 loadConfig()
   .then(() => {
+    applyTheme();
+    systemThemeQuery.addEventListener('change', () => {
+      if (state.themeMode === 'system') {
+        applyTheme();
+        render();
+      }
+    });
     window.addEventListener('hashchange', render);
     render();
   })
