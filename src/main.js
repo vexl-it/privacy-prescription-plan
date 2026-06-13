@@ -2,26 +2,25 @@ import './styles.css';
 
 const app = document.querySelector('#app');
 const THEME_STORAGE_KEY = 'vexl-privacy-clinic-theme-mode';
-const themeModes = ['light', 'dark', 'system'];
-const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+const themeModes = ['light', 'dark', 'disco'];
+const DISCO_INTERVAL_MS = 250;
+let discoTheme = 'light';
+let discoIntervalId = null;
 const state = {
   selected: new Set(),
   config: null,
   adviceVisible: false,
   themeMode: getInitialThemeMode(),
+  themePickerOpen: false,
 };
 
 function getInitialThemeMode() {
   const savedMode = localStorage.getItem(THEME_STORAGE_KEY);
-  return themeModes.includes(savedMode) ? savedMode : 'system';
+  return themeModes.includes(savedMode) ? savedMode : 'dark';
 }
 
 function getResolvedTheme() {
-  return state.themeMode === 'system'
-    ? systemThemeQuery.matches
-      ? 'dark'
-      : 'light'
-    : state.themeMode;
+  return state.themeMode === 'disco' ? discoTheme : state.themeMode;
 }
 
 function applyTheme() {
@@ -34,9 +33,27 @@ function applyTheme() {
     ?.setAttribute('content', resolvedTheme === 'dark' ? '#050604' : '#f4f1e8');
 }
 
+function syncDiscoTimer() {
+  if (discoIntervalId) {
+    clearInterval(discoIntervalId);
+    discoIntervalId = null;
+  }
+
+  if (state.themeMode !== 'disco') return;
+
+  discoIntervalId = window.setInterval(() => {
+    discoTheme = discoTheme === 'light' ? 'dark' : 'light';
+    applyTheme();
+  }, DISCO_INTERVAL_MS);
+}
+
 function setThemeMode(mode) {
+  if (!themeModes.includes(mode)) return;
+
   state.themeMode = mode;
+  state.themePickerOpen = false;
   localStorage.setItem(THEME_STORAGE_KEY, mode);
+  syncDiscoTimer();
   applyTheme();
   render();
 }
@@ -96,21 +113,34 @@ function renderHeader() {
         <img class="logo" src="/assets/logos/vexl-logo-white.svg" alt="Vexl" />
       </div>
       <div class="topbar-actions">
-        <div class="theme-switcher" aria-label="Color theme">
-          ${themeModes
-            .map(
-              (mode) => `
-                <button
-                  class="theme-option ${state.themeMode === mode ? 'is-active' : ''}"
-                  type="button"
-                  data-theme-mode="${mode}"
-                  aria-pressed="${state.themeMode === mode}"
-                >
-                  ${mode}
-                </button>
-              `,
-            )
-            .join('')}
+        <div class="theme-picker ${state.themePickerOpen ? 'is-open' : ''}">
+          <button
+            class="theme-trigger"
+            type="button"
+            data-action="toggle-theme-picker"
+            aria-haspopup="menu"
+            aria-expanded="${state.themePickerOpen}"
+          >
+            <span>Theme</span>
+            <strong>${state.themeMode}</strong>
+          </button>
+          <div class="theme-menu" role="menu" aria-label="Color theme">
+            ${themeModes
+              .map(
+                (mode) => `
+                  <button
+                    class="theme-option ${state.themeMode === mode ? 'is-active' : ''}"
+                    type="button"
+                    role="menuitemradio"
+                    data-theme-mode="${mode}"
+                    aria-checked="${state.themeMode === mode}"
+                  >
+                    <span>${mode}</span>
+                  </button>
+                `,
+              )
+              .join('')}
+          </div>
         </div>
         <div class="clinic-pill" aria-label="Clinic name">
           ${state.config.diagnosticConfig.clinicName}
@@ -121,6 +151,11 @@ function renderHeader() {
 }
 
 function bindHeaderActions() {
+  app.querySelector('[data-action="toggle-theme-picker"]')?.addEventListener('click', () => {
+    state.themePickerOpen = !state.themePickerOpen;
+    render();
+  });
+
   app.querySelectorAll('[data-theme-mode]').forEach((button) => {
     button.addEventListener('click', (event) => {
       setThemeMode(event.currentTarget.dataset.themeMode);
@@ -290,12 +325,19 @@ function render() {
 
 loadConfig()
   .then(() => {
+    syncDiscoTimer();
     applyTheme();
-    systemThemeQuery.addEventListener('change', () => {
-      if (state.themeMode === 'system') {
-        applyTheme();
-        render();
-      }
+    document.addEventListener('click', (event) => {
+      if (!state.themePickerOpen || event.target.closest('.theme-picker')) return;
+
+      state.themePickerOpen = false;
+      render();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !state.themePickerOpen) return;
+
+      state.themePickerOpen = false;
+      render();
     });
     window.addEventListener('hashchange', render);
     render();
