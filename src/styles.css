@@ -165,6 +165,29 @@ input:focus-visible + .checkmark {
   padding: clamp(16px, 2vw, 24px) 0 116px;
 }
 
+.vexlak-pet {
+  position: fixed;
+  left: clamp(10px, 1.8vw, 24px);
+  bottom: clamp(10px, 1.8vw, 24px);
+  z-index: 7;
+  width: clamp(88px, 9vw, 142px);
+  aspect-ratio: 1;
+  background-image: url('/assets/pets/vexlak-spritesheet.webp');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 800% auto;
+  filter: drop-shadow(0 14px 20px color-mix(in oklch, var(--ink) 48%, transparent));
+  image-rendering: pixelated;
+  pointer-events: none;
+  animation: vexlak-pet-loop 820ms steps(6) infinite;
+}
+
+@keyframes vexlak-pet-loop {
+  to {
+    background-position: -600% 0;
+  }
+}
+
 .topbar {
   display: flex;
   align-items: center;
@@ -1272,6 +1295,10 @@ h2,
   .diagnosis-screen .activation.is-visible {
     grid-template-columns: 1fr;
   }
+
+  .vexlak-pet {
+    width: 76px;
+  }
 }
 
 @media print {
@@ -1290,12 +1317,19 @@ h2,
   }
 
   .topbar,
-  .action-bar {
+  .action-bar,
+  .vexlak-pet {
     display: none;
   }
 
   .prescription {
     border-color: var(--ink);
     box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vexlak-pet {
+    animation: none;
   }
 }

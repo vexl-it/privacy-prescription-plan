@@ -150,6 +150,10 @@ function renderHeader() {
   `;
 }
 
+function renderVexlakPet() {
+  return '<div class="vexlak-pet" aria-hidden="true"></div>';
+}
+
 function bindHeaderActions() {
   app.querySelector('[data-action="toggle-theme-picker"]')?.addEventListener('click', () => {
     state.themePickerOpen = !state.themePickerOpen;
@@ -169,6 +173,7 @@ function renderStart() {
   app.innerHTML = `
     <main class="shell start-shell">
       ${renderHeader()}
+      ${renderVexlakPet()}
       <section class="start-screen">
         <div class="start-copy">
           <p class="eyebrow">${questionConfig.eyebrow}</p>
@@ -191,6 +196,7 @@ function renderIntake() {
   app.innerHTML = `
     <main class="shell intake-shell">
       ${renderHeader()}
+      ${renderVexlakPet()}
       <section class="hero-grid">
         <div class="intro">
           <h1 class="screen-title">Tap every symptom <span>Multiple answers are allowed.</span></h1>
@@ -255,6 +261,7 @@ function renderResults() {
   app.innerHTML = `
     <main class="shell results-shell">
       ${renderHeader()}
+      ${renderVexlakPet()}
       <section class="diagnosis-screen">
         <div class="diagnosis-card">
           <p class="eyebrow">${diagnosticConfig.resultEyebrow}</p>
